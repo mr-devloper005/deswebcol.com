@@ -13,6 +13,7 @@ type ListingContent = {
   category?: string
   description?: string
   email?: string
+  phone?: string
 }
 
 const stripHtml = (value?: string | null) =>
@@ -115,47 +116,77 @@ export function TaskPostCard({
   const isDirectorySurface = isDirectoryProduct && (variant === 'listing' || variant === 'classified' || variant === 'profile')
 
   if (isDirectorySurface) {
-    const cardTone = recipe.brandPack === 'market-utility'
-      ? {
-          frame: 'rounded-[1.75rem] border border-[#d7deca] bg-white shadow-[0_18px_44px_rgba(64,76,34,0.08)] hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(64,76,34,0.14)]',
-          badge: 'bg-[#1f2617] text-[#edf5dc]',
-          muted: 'text-[#5b664c]',
-          title: 'text-[#1f2617]',
-          cta: 'text-[#1f2617]',
-        }
-      : {
-          frame: 'rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_18px_44px_rgba(15,23,42,0.08)] hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(15,23,42,0.14)]',
-          badge: 'bg-slate-950 text-white',
-          muted: 'text-slate-600',
-          title: 'text-slate-950',
-          cta: 'text-slate-950',
-        }
+    const cardTone = {
+      frame: 'rounded-md border border-border bg-card shadow-[0_8px_28px_rgba(26,26,29,0.07)] transition duration-200 hover:shadow-[0_14px_40px_rgba(106,30,85,0.12)] hover:ring-1 hover:ring-primary/20',
+      badge: 'bg-primary/12 text-primary border border-primary/20',
+      muted: 'text-muted-foreground',
+      title: 'text-foreground',
+      cta: 'text-primary',
+    }
 
     return (
-      <Link href={href} className={`group flex h-full flex-col overflow-hidden transition duration-300 ${cardTone.frame}`}>
-        <div className="relative aspect-[16/11] overflow-hidden bg-slate-100">
-          <ContentImage src={image} alt={altText} fill sizes={imageSizes} quality={75} className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" intrinsicWidth={960} intrinsicHeight={720} />
-          <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
-            <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${cardTone.badge}`}>
-              <Tag className="h-3.5 w-3.5" />
+      <Link
+        href={href}
+        className={`group flex h-full min-h-0 flex-col gap-0 overflow-hidden sm:flex-row ${cardTone.frame}`}
+      >
+        <div className="relative h-40 shrink-0 bg-muted/50 sm:h-auto sm:w-32 sm:min-h-[11rem]">
+          <ContentImage
+            src={image}
+            alt={altText}
+            fill
+            sizes="(max-width: 640px) 100vw, 128px"
+            quality={70}
+            className="object-cover opacity-90 transition duration-300 group-hover:opacity-100"
+            intrinsicWidth={320}
+            intrinsicHeight={320}
+          />
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col p-5 sm:py-5 sm:pl-4 sm:pr-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span
+              className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] ${cardTone.badge}`}
+            >
+              <Tag className="h-3 w-3" />
               {category}
             </span>
-            <span className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-900">
-              {variant === 'classified' ? 'Open now' : 'Verified'}
+            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+              {variant === 'classified' ? 'Classified' : 'Business record'}
             </span>
           </div>
-        </div>
-        <div className="flex flex-1 flex-col p-5">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className={`line-clamp-2 text-xl font-semibold leading-snug ${cardTone.title}`}>{post.title}</h3>
-            <ArrowUpRight className={`h-5 w-5 shrink-0 ${cardTone.muted}`} />
+          <div className="mt-3 flex items-start justify-between gap-2">
+            <h3 className={`line-clamp-2 text-lg font-medium leading-snug sm:text-xl ${cardTone.title}`}>
+              {post.title}
+            </h3>
+            <ArrowUpRight className={`mt-0.5 h-4 w-4 shrink-0 ${cardTone.muted}`} />
           </div>
-          <p className={`mt-3 line-clamp-3 text-sm leading-7 ${cardTone.muted}`}>{getExcerpt(content.description || post.summary) || 'Explore this local listing.'}</p>
-          <div className="mt-5 flex flex-wrap gap-3 text-xs">
-            {content.location ? <span className={`inline-flex items-center gap-1 ${cardTone.muted}`}><MapPin className="h-3.5 w-3.5" />{content.location}</span> : null}
-            {content.email ? <span className={`inline-flex items-center gap-1 ${cardTone.muted}`}><Mail className="h-3.5 w-3.5" />{content.email}</span> : null}
+          <p className={`mt-2 line-clamp-3 text-sm leading-relaxed ${cardTone.muted}`}>
+            {getExcerpt(content.description || post.summary) || 'Review operating details, contacts, and category on the full record.'}
+          </p>
+          <div className="mt-4 flex flex-col gap-1.5 text-xs sm:flex-row sm:flex-wrap sm:gap-x-4 sm:gap-y-1">
+            {content.location ? (
+              <span className={`inline-flex items-center gap-1.5 font-medium ${cardTone.muted}`}>
+                <MapPin className="h-3.5 w-3.5 text-primary" />
+                {content.location}
+              </span>
+            ) : null}
+            {content.email ? (
+              <span className={`inline-flex min-w-0 items-center gap-1.5 ${cardTone.muted}`}>
+                <Mail className="h-3.5 w-3.5 shrink-0 text-primary" />
+                <span className="truncate">{content.email}</span>
+              </span>
+            ) : null}
+            {content.phone ? (
+              <span className={`inline-flex items-center gap-1.5 ${cardTone.muted}`}>
+                <span className="text-primary" aria-hidden>
+                  ·
+                </span>
+                {content.phone}
+              </span>
+            ) : null}
           </div>
-          <div className={`mt-auto pt-5 text-sm font-semibold ${cardTone.cta}`}>{variant === 'classified' ? 'View offer' : 'View details'}</div>
+          <div className={`mt-auto pt-4 text-sm font-semibold ${cardTone.cta}`}>
+            {variant === 'classified' ? 'Open notice' : 'Open dossier'}
+          </div>
         </div>
       </Link>
     )
