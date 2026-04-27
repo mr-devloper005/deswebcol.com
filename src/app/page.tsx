@@ -39,6 +39,10 @@ const taskIcons: Record<TaskKey, any> = {
   classified: Tag,
   image: ImageIcon,
   profile: User,
+  social: undefined,
+  pdf: undefined,
+  org: undefined,
+  comment: undefined
 }
 
 function resolveTaskKey(value: unknown, fallback: TaskKey): TaskKey {
@@ -130,18 +134,16 @@ function getCurationTone() {
   }
 }
 
-function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPosts, profilePosts }: {
+function DirectoryHome({ primaryTask, enabledTasks, listingPosts }: {
   primaryTask?: EnabledTask
   enabledTasks: EnabledTask[]
   listingPosts: SitePost[]
-  classifiedPosts: SitePost[]
-  profilePosts: SitePost[]
 }) {
   const tone = getDirectoryTone()
-  const featuredListings = (listingPosts.length ? listingPosts : classifiedPosts).slice(0, 3)
-  const featuredTaskKey: TaskKey = listingPosts.length ? 'listing' : 'classified'
+  const featuredListings = listingPosts.slice(0, 3)
+  const featuredTaskKey: TaskKey = 'listing'
   const quickRoutes = enabledTasks.slice(0, 4)
-  const indexRows = (listingPosts.length ? listingPosts : classifiedPosts).slice(0, 4)
+  const indexRows = listingPosts.slice(0, 4)
   const secondaryLabel = siteContent.home.introBadge
   return (
     <main>
@@ -186,7 +188,7 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
               <div className="mt-10 grid gap-3 sm:grid-cols-3">
                 {[
                   { k: 'Fields first', v: 'Category · area · contact before imagery' },
-                  { k: 'Classifieds lane', v: 'Faster path for time-bound offers' },
+                  { k: 'Listings only', v: 'Business records stay clean and consistent' },
                   { k: 'Index rhythm', v: 'Built to skim like a register, not a feed' },
                 ].map((row) => (
                   <div key={row.k} className="rounded-md border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
@@ -207,10 +209,10 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
                         return (
                           <div
                             key={post.id}
-                            className="flex items-start justify-between gap-2 border-b border-white/5 pb-3 last:border-0"
+                            className="grid min-w-0 gap-1 border-b border-white/5 pb-3 last:border-0 sm:grid-cols-[minmax(0,1fr)_minmax(8rem,14rem)] sm:gap-4"
                           >
-                            <span className="min-w-0 truncate text-[#faf5f7]">{post.title}</span>
-                            <span className="shrink-0 text-[#a64d79]">
+                            <span className="min-w-0 truncate text-[#faf5f7]" title={post.title}>{post.title}</span>
+                            <span className="min-w-0 truncate text-left text-[#a64d79] sm:text-right" title={meta.location || '—'}>
                               {meta.location || '—'}
                             </span>
                           </div>
@@ -304,37 +306,41 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
             </ul>
           </div>
           <div className="space-y-3">
-            {(profilePosts.length ? profilePosts : classifiedPosts).slice(0, 4).map((post) => {
+            {listingPosts.slice(0, 4).map((post) => {
               const meta = getPostMeta(post)
-              const taskKey = resolveTaskKey(post.task, profilePosts.length ? 'profile' : 'classified')
+              const taskKey = resolveTaskKey(post.task, 'listing')
+              const postImage = getPostImage(post)
               return (
                 <Link
                   key={post.id}
                   href={getTaskHref(taskKey, post.slug)}
-                  className={`block rounded-md p-5 transition ${tone.panel} hover:ring-1 hover:ring-primary/25`}
+                  className={`group flex flex-row gap-4 rounded-md p-4 transition ${tone.panel} hover:ring-1 hover:ring-primary/25`}
                 >
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded bg-muted/50">
+                    <ContentImage src={postImage} alt={post.title} fill className="object-cover opacity-90 transition duration-300 group-hover:opacity-100" intrinsicWidth={200} intrinsicHeight={200} />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col justify-between">
                     <div>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">{meta.category || 'Record'}</p>
-                      <h3 className="mt-1 text-lg font-medium text-foreground">{post.title}</h3>
+                      <h3 className="mt-1 line-clamp-2 text-lg font-medium text-foreground">{post.title}</h3>
                     </div>
-                    <div className="shrink-0 text-right text-xs text-muted-foreground sm:text-left">
+                    <div className="mt-2 flex flex-col gap-2">
                       {meta.location ? (
-                        <span className="inline-flex items-center gap-1">
-                          <MapPin className="h-3.5 w-3.5" />
-                          {meta.location}
+                        <span className="inline-flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
+                          <MapPin className="h-3.5 w-3.5 shrink-0" />
+                          <span className="break-words">{meta.location}</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1">
-                          <Phone className="h-3.5 w-3.5" />
+                        <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                          <Phone className="h-3.5 w-3.5 shrink-0" />
                           Contact on file
                         </span>
                       )}
+                      <p className={`line-clamp-2 text-xs ${tone.muted}`}>
+                        {post.summary || 'Structured business metadata for this entry.'}
+                      </p>
                     </div>
                   </div>
-                  <p className={`mt-3 line-clamp-2 text-sm ${tone.muted}`}>
-                    {post.summary || 'Structured business metadata for this entry.'}
-                  </p>
                 </Link>
               )
             })}
@@ -569,7 +575,6 @@ export default async function HomePage() {
   const primaryTask = enabledTasks.find((task) => task.key === recipe.primaryTask) || enabledTasks[0]
   const supportTasks = enabledTasks.filter((task) => task.key !== primaryTask?.key)
   const listingPosts = taskFeed.find(({ task }) => task.key === 'listing')?.posts || []
-  const classifiedPosts = taskFeed.find(({ task }) => task.key === 'classified')?.posts || []
   const articlePosts = taskFeed.find(({ task }) => task.key === 'article')?.posts || []
   const imagePosts = taskFeed.find(({ task }) => task.key === 'image')?.posts || []
   const profilePosts = taskFeed.find(({ task }) => task.key === 'profile')?.posts || []
@@ -606,8 +611,6 @@ export default async function HomePage() {
           primaryTask={primaryTask}
           enabledTasks={enabledTasks}
           listingPosts={listingPosts}
-          classifiedPosts={classifiedPosts}
-          profilePosts={profilePosts}
         />
       ) : null}
       {productKind === 'editorial' ? (
@@ -623,3 +626,4 @@ export default async function HomePage() {
     </div>
   )
 }
+

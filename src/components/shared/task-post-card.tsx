@@ -127,21 +127,21 @@ export function TaskPostCard({
     return (
       <Link
         href={href}
-        className={`group flex h-full min-h-0 flex-col gap-0 overflow-hidden sm:flex-row ${cardTone.frame}`}
+        className={`group flex h-full min-h-0 flex-row gap-0 overflow-hidden ${cardTone.frame}`}
       >
-        <div className="relative h-40 shrink-0 bg-muted/50 sm:h-auto sm:w-32 sm:min-h-[11rem]">
+        <div className="relative h-full w-40 shrink-0 bg-muted/50 sm:w-48">
           <ContentImage
             src={image}
             alt={altText}
             fill
-            sizes="(max-width: 640px) 100vw, 128px"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             quality={70}
             className="object-cover opacity-90 transition duration-300 group-hover:opacity-100"
             intrinsicWidth={320}
             intrinsicHeight={320}
           />
         </div>
-        <div className="flex min-w-0 flex-1 flex-col p-5 sm:py-5 sm:pl-4 sm:pr-5">
+        <div className="flex min-w-0 flex-1 flex-col p-5">
           <div className="flex flex-wrap items-center gap-2">
             <span
               className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] ${cardTone.badge}`}
@@ -153,8 +153,8 @@ export function TaskPostCard({
               {variant === 'classified' ? 'Classified' : 'Business record'}
             </span>
           </div>
-          <div className="mt-3 flex items-start justify-between gap-2">
-            <h3 className={`line-clamp-2 text-lg font-medium leading-snug sm:text-xl ${cardTone.title}`}>
+          <div className="mt-3 flex min-w-0 items-start justify-between gap-2">
+            <h3 className={`line-clamp-2 min-w-0 overflow-hidden text-lg font-medium leading-snug ${cardTone.title}`}>
               {post.title}
             </h3>
             <ArrowUpRight className={`mt-0.5 h-4 w-4 shrink-0 ${cardTone.muted}`} />
@@ -164,15 +164,15 @@ export function TaskPostCard({
           </p>
           <div className="mt-4 flex flex-col gap-1.5 text-xs sm:flex-row sm:flex-wrap sm:gap-x-4 sm:gap-y-1">
             {content.location ? (
-              <span className={`inline-flex items-center gap-1.5 font-medium ${cardTone.muted}`}>
-                <MapPin className="h-3.5 w-3.5 text-primary" />
-                {content.location}
+              <span className={`inline-flex min-w-0 items-center gap-1.5 font-medium ${cardTone.muted}`}>
+                <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" />
+                <span className="break-words">{content.location}</span>
               </span>
             ) : null}
             {content.email ? (
               <span className={`inline-flex min-w-0 items-center gap-1.5 ${cardTone.muted}`}>
                 <Mail className="h-3.5 w-3.5 shrink-0 text-primary" />
-                <span className="truncate">{content.email}</span>
+                <span className="break-words">{content.email}</span>
               </span>
             ) : null}
             {content.phone ? (
@@ -204,33 +204,33 @@ export function TaskPostCard({
               <Tag className="h-3.5 w-3.5" />
               {category}
             </span>
-            {content.location ? <span className={`inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><MapPin className="h-3.5 w-3.5" />{content.location}</span> : null}
+            {content.location ? <span className={`inline-flex min-w-0 items-center gap-1 text-xs ${visualVariant.muted}`}><MapPin className="h-3.5 w-3.5 shrink-0" /><span className="break-words">{content.location}</span></span> : null}
           </div>
           <h3 className={`mt-3 line-clamp-2 text-lg font-semibold leading-snug group-hover:opacity-85 ${visualVariant.title}`}>{post.title}</h3>
           <p className={`mt-2 line-clamp-3 text-sm leading-7 ${visualVariant.muted}`}>{getExcerpt(content.description || post.summary, compact ? 120 : 180) || 'Explore this bookmark.'}</p>
-          {content.email ? <div className={`mt-3 inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><Mail className="h-3.5 w-3.5" />{content.email}</div> : null}
+          {content.email ? <div className={`mt-3 inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><Mail className="h-3.5 w-3.5 shrink-0" /><span className="break-words">{content.email}</span></div> : null}
         </div>
       </Link>
     )
   }
 
   return (
-    <Link href={href} className={`group flex h-full flex-col overflow-hidden transition duration-300 ${visualVariant.frame}`}>
-      <div className={`relative ${imageAspect} overflow-hidden bg-[#ede2dc]`}>
+    <Link href={href} className={`group flex h-full flex-row overflow-hidden transition duration-300 ${visualVariant.frame}`}>
+      <div className={`relative w-32 shrink-0 overflow-hidden bg-[#ede2dc] sm:w-40 ${imageAspect}`}>
         <ContentImage src={image} alt={altText} fill sizes={imageSizes} quality={75} className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" intrinsicWidth={960} intrinsicHeight={720} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-80" />
-        <span className={`absolute left-4 top-4 inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${visualVariant.badge}`}>
-          <Tag className="h-3.5 w-3.5" />
+        <span className={`absolute left-2 top-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] ${visualVariant.badge}`}>
+          <Tag className="h-3 w-3" />
           {category}
         </span>
-        {variant === 'pdf' && <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/88 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-950 shadow"><FileText className="h-3.5 w-3.5" />PDF</span>}
+        {variant === 'pdf' && <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-white/88 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-950 shadow"><FileText className="h-3 w-3" />PDF</span>}
       </div>
-      <div className={`flex flex-1 flex-col p-5 ${compact ? 'py-4' : ''}`}>
-        <h3 className={`line-clamp-2 font-semibold leading-snug ${variant === 'article' ? 'text-[1.35rem]' : 'text-lg'} ${visualVariant.title}`}>{post.title}</h3>
-        <p className={`mt-3 text-sm leading-7 ${variant === 'article' ? 'line-clamp-4' : 'line-clamp-3'} ${visualVariant.muted}`}>{getExcerpt(content.description || post.summary) || 'Explore this post.'}</p>
-        <div className="mt-auto pt-4">
-          {content.location && <div className={`inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><MapPin className="h-3.5 w-3.5" />{content.location}</div>}
-          {content.email && <div className={`mt-2 inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><Mail className="h-3.5 w-3.5" />{content.email}</div>}
+      <div className={`flex min-w-0 flex-1 flex-col p-4 ${compact ? 'py-3' : ''}`}>
+        <h3 className={`line-clamp-2 font-semibold leading-snug ${variant === 'article' ? 'text-[1.35rem]' : 'text-base'} ${visualVariant.title}`}>{post.title}</h3>
+        <p className={`mt-2 text-sm leading-7 ${variant === 'article' ? 'line-clamp-4' : 'line-clamp-3'} ${visualVariant.muted}`}>{getExcerpt(content.description || post.summary) || 'Explore this post.'}</p>
+        <div className="mt-auto pt-3">
+          {content.location && <div className={`inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><MapPin className="h-3.5 w-3.5 shrink-0" /><span className="break-words">{content.location}</span></div>}
+          {content.email && <div className={`mt-2 inline-flex items-center gap-1 text-xs ${visualVariant.muted}`}><Mail className="h-3.5 w-3.5 shrink-0" /><span className="break-words">{content.email}</span></div>}
         </div>
       </div>
     </Link>

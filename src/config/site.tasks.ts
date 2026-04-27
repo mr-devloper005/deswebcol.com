@@ -13,7 +13,7 @@ export const siteTaskDefinitions = [
     route: '/classifieds',
     description: 'Timely offers, roles, and local deals.',
     contentType: 'classified',
-    enabled: true,
+    enabled: false,
   },
   {
     key: 'article',
