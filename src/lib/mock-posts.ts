@@ -16,117 +16,121 @@ const taskSeeds: Record<TaskKey, string> = {
 
 const taskTitles: Record<TaskKey, string[]> = {
   listing: [
-    "Urban Coffee Studio",
-    "Growth Labs Agency",
-    "Northside Fitness",
-    "PixelCraft Design",
-    "Prime Auto Care",
+    "Harborline Advisory LLP",
+    "Kaveri Metalworks Private Limited",
+    "Third Space Interior Studio",
+    "Bluecap Analytics India",
+    "Niva Retail Collective",
   ],
   classified: [
-    "Used MacBook Pro 16",
-    "Studio Space for Rent",
-    "Hiring Frontend Developer",
-    "Weekend Photography Gig",
-    "City Center Apartment",
+    "CFA exam study group — weekend cohort",
+    "Bengaluru Indiranagar 2BHK — May handover",
+    "Contract product designer (8 weeks, remote)",
+    "Event AV crew for two-day conference",
+    "Short-term kitchen equipment lease",
   ],
   article: [
-    "Scaling Local SEO in 2026",
-    "The Future of Directory Sites",
-    "Design Systems for Multi-Site",
-    "From MVP to Marketplace",
-    "Content Ops That Ship Fast",
+    "How procurement teams read a business directory",
+    "Field notes: auditing supplier listings at scale",
+    "What belongs in a listing vs. a classified",
+    "Designing data-first cards without losing trust",
+    "From spreadsheet to public index: operator workflow",
   ],
   image: [
-    "Golden Hour Interiors",
-    "Mountain Trail Series",
-    "Studio Portrait Set",
-    "Neon Night Market",
-    "Minimal Workspace",
+    "Factory floor documentation — batch one",
+    "Showroom lighting study",
+    "Field visit — cold chain check",
+    "Reference shots — packaging line",
+    "Archive: pop-up fit-out",
   ],
   profile: [
-    "Aisha Khan",
-    "Rohan Patel",
-    "Studio R&R",
-    "Team Northwind",
-    "Maya Desai",
+    "Meera Krishnan — commercial lead",
+    "Rahul Varma — operations",
+    "Studio 11 Architecture",
+    "Ananya Bose — finance partner",
+    "Collective North — delivery desk",
   ],
   social: [
-    "Community Launch Update",
-    "Collab Request: Designers",
-    "Weekly Trend Digest",
-    "New Partnerships Announced",
-    "Creator Spotlight Series",
+    "Q2 hiring window opening next week",
+    "Waterfront project kickoff",
+    "Community office hours: listings QA",
+    "New connector release for directory sync",
+    "Reader mail: industry taxonomy",
   ],
   pdf: [
-    "Local SEO Playbook",
-    "Marketplace UX Guide",
-    "Outbound Sales Template",
-    "Agency Pricing Deck",
-    "SaaS Metrics Cheatsheet",
+    "Supplier onboarding checklist (2026)",
+    "Directory data field dictionary",
+    "Classifieds moderation guide",
+    "Map embed policy — one pager",
+    "Index SEO baseline report",
   ],
   org: [
-    "Northwind Collective",
-    "Brightline Media",
-    "Atlas Labs",
-    "Cobalt Studio",
-    "Zenith Partners",
+    "Mumbai operations council",
+    "Deswebcol partner network",
+    "South India facilities guild",
+    "Research desk — listings quality",
+    "Field verification partners",
   ],
   sbm: [
-    "SEO Checklist 2026",
-    "Directory Growth Tactics",
-    "Backlink Outreach Vault",
-    "AI Writing Tools List",
-    "Local Listing Audit",
+    "ISO supplier evaluation templates",
+    "OSM embed documentation",
+    "Local business licensing portals (state list)",
+    "Civil contractor reference sheet",
+    "B2B payment terms primer",
   ],
   comment: [
-    "Reply: Agency Growth Stack",
-    "Commentary: Link Building",
-    "Response: Listing Quality",
-    "Thread: SEO Experiments",
-    "Hot Take: Directory UX",
+    "Re: card layout for services firms",
+    "Thread: map accuracy",
+    "Response: category depth",
+    "On listing vs profile split",
+    "Hot take: imagery optional fields",
   ],
 };
 
 const taskCategories: Record<TaskKey, string[]> = {
-  listing: ["Marketing", "Tech", "Design", "Fitness", "Automotive"],
-  classified: ["Jobs", "Real Estate", "Services", "Gigs", "Market"],
-  article: ["Strategy", "SEO", "Product", "Growth", "Ops"],
-  image: ["Lifestyle", "Travel", "Studio", "Urban", "Minimal"],
-  profile: ["Founder", "Creator", "Agency", "Team", "Consultant"],
-  social: ["Community", "News", "Updates", "Events", "Insights"],
-  pdf: ["Guides", "Playbooks", "Templates", "Reports", "Docs"],
-  org: ["Agency", "Studio", "Collective", "Partner", "Network"],
-  sbm: ["Bookmarks", "Tools", "Resources", "SEO", "Research"],
-  comment: ["Opinion", "Reply", "Discussion", "Feedback", "Debate"],
+  listing: [
+    "Professional services",
+    "Manufacturing",
+    "Design & build",
+    "Software & data",
+    "Retail & distribution",
+  ],
+  classified: ["Housing", "Gigs", "Roles", "Events", "Equipment"],
+  article: ["Ops", "Product", "Field notes", "Policy", "Design"],
+  image: ["Field", "Reference", "Archive", "Space", "Process"],
+  profile: ["Leadership", "Studio", "Team", "Partner", "Desk"],
+  social: ["Update", "Calendar", "Ops", "Release", "Mailbag"],
+  pdf: ["Playbook", "Spec", "Policy", "Template", "Report"],
+  org: ["Council", "Network", "Guild", "Research", "Field"],
+  sbm: ["Reference", "Compliance", "Maps", "Construction", "Finance"],
+  comment: ["Discussion", "Support", "Thread", "Ops", "Opinion"],
 };
 
 const summaryByTask: Record<TaskKey, string> = {
-  listing: "Verified business listing with trusted details.",
-  classified: "Fresh deal posted by a verified seller.",
-  article: "Long-form insight from industry experts.",
-  image: "Curated visual story and gallery.",
-  profile: "Featured creator profile and highlights.",
-  social: "Community update and engagement thread.",
-  pdf: "Downloadable resource for your team.",
-  org: "Organization spotlight and services.",
-  sbm: "Curated bookmark collection entry.",
-  comment: "Response post with perspective and context.",
+  listing:
+    "Verified operating areas, contact channels, and service scope in a single register row.",
+  classified: "Time-bound notice with a direct response path and lighter metadata than a full listing.",
+  article: "Longer perspective that sits beside the index without replacing it.",
+  image: "Visual reference when words are not enough; still cross-linked to listings.",
+  profile: "Identity surface for a person, desk, or studio behind the work.",
+  social: "Short operational signal; not a substitute for a business dossier.",
+  pdf: "Downloadable file with versioned context for partners and members.",
+  org: "Group or council page with structure above individual listings.",
+  sbm: "Curated external links stored for repeat access during reviews.",
+  comment: "Contextual response tied to the post it references.",
 };
 
-const randomFrom = (items: string[], index: number) =>
-  items[index % items.length];
+const randomFrom = (items: string[], index: number) => items[index % items.length];
 
 const buildImage = (task: TaskKey, index: number) =>
   `https://picsum.photos/seed/${taskSeeds[task]}-${index}/1200/800`;
 
 export const getMockPostsForTask = (task: TaskKey): SitePost[] => {
+  const titleList = taskTitles[task];
   return Array.from({ length: 5 }).map((_, index) => {
-    const title = taskTitles[task][index];
+    const title = titleList[index];
     const category = randomFrom(taskCategories[task], index);
-    const slug = `${title}`
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+    const slug = `${title}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
     return {
       id: `${task}-mock-${index + 1}`,
@@ -136,14 +140,20 @@ export const getMockPostsForTask = (task: TaskKey): SitePost[] => {
       content: {
         type: task,
         category,
-        location: "Delhi",
+        location:
+          index % 3 === 0
+            ? "Bengaluru, Karnataka"
+            : index % 3 === 1
+              ? "Mumbai, Maharashtra"
+              : "Hyderabad, Telangana",
         description: summaryByTask[task],
-        website: "https://example.com",
-        phone: "+91-9999999999",
+        website: "https://deswebcol.com",
+        phone: "+91-80-4120-9000",
+        email: "registry@deswebcol.com",
       },
       media: [{ url: buildImage(task, index), type: "IMAGE" }],
       tags: [task, category],
-      authorName: "Site Master Pro",
+      authorName: "Deswebcol Registry",
       publishedAt: new Date().toISOString(),
     };
   });

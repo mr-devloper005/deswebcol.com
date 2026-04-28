@@ -6,14 +6,10 @@ export const SITE_RECIPE: SiteRecipe = {
   homepageTemplate: 'listing-home',
   navbarTemplate: 'compact-bar',
   footerTemplate: 'columns-footer',
-  motionPack: 'minimal',
+  motionPack: 'utility-snappy',
   primaryTask: 'listing',
-  enabledTasks: ['listing', 'classified', 'profile'],
-  taskTemplates: {
-    listing: 'listing-directory',
-    classified: 'classified-market',
-    profile: 'profile-business',
-  },
+  enabledTasks: ['listing'],
+  taskTemplates: { listing: 'listing-directory' },
   manualOverrides: {
     navbar: false,
     footer: false,
@@ -26,5 +22,3 @@ export const SITE_RECIPE: SiteRecipe = {
     registerPage: false,
   },
 }
-
-

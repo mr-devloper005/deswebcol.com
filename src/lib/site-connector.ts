@@ -1,4 +1,5 @@
 export type SitePost = {
+  task(task: any, arg1: string): unknown;
   id: string;
   title: string;
   slug: string;

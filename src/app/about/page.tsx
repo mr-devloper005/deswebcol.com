@@ -1,93 +1,88 @@
-import Link from "next/link";
-import { PageShell } from "@/components/shared/page-shell";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { mockTeamMembers } from "@/data/mock-data";
-import { SITE_CONFIG } from "@/lib/site-config";
+import Link from 'next/link'
+import { ArrowRight, Building2, CheckCircle2, Database, MapPin, ShieldCheck } from 'lucide-react'
+import { NavbarShell } from '@/components/shared/navbar-shell'
+import { Footer } from '@/components/shared/footer'
+import { SITE_CONFIG } from '@/lib/site-config'
 
-const highlights = [
-  { label: "Creators onboarded", value: "12k+" },
-  { label: "Bookmarks shared", value: "180k" },
-  { label: "Listings published", value: "8.6k" },
-];
+const measures = [
+  { label: 'Structured records', value: '8.6k+' },
+  { label: 'Service categories', value: '120+' },
+  { label: 'Buyer signals', value: '24/7' },
+]
 
-const values = [
-  { title: "Curated by people", description: "We believe trusted recommendations beat endless feeds." },
-  { title: "Designed for focus", description: "Clear, calm UI helps you find the next best resource fast." },
-  { title: "Built to share", description: "Collections make collaboration and knowledge flow effortless." },
-];
+const principles = [
+  { icon: Database, title: 'Data before decoration', body: 'Listings prioritize category, service area, contact paths, and useful business facts before visual polish.' },
+  { icon: ShieldCheck, title: 'Trust is visible', body: 'Verified markers, clear metadata, and owner-friendly workflows help visitors judge a listing quickly.' },
+  { icon: MapPin, title: 'Local context matters', body: 'The directory is built for practical discovery: city, coverage area, address, and reachability stay close to the surface.' },
+]
 
 export default function AboutPage() {
   return (
-    <PageShell
-      title={`About ${SITE_CONFIG.name}`}
-      description={`${SITE_CONFIG.name} is a modern platform for creators, communities, and curated business discovery.`}
-      actions={
-        <>
-          <Button variant="outline" asChild>
-            <Link href="/team">Meet the Team</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/contact">Contact Us</Link>
-          </Button>
-        </>
-      }
-    >
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="border-border bg-card">
-          <CardContent className="space-y-4 p-6">
-            <Badge variant="secondary">Our Story</Badge>
-            <h2 className="text-2xl font-semibold text-foreground">
-              A single home for knowledge, discovery, and community.
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {SITE_CONFIG.name} brings together publishing, listings, and social bookmarking so teams can move faster
-              and keep their best resources close.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {highlights.map((item) => (
-                <div key={item.label} className="rounded-lg border border-border bg-secondary/40 p-4">
-                  <div className="text-2xl font-semibold text-foreground">{item.value}</div>
-                  <div className="text-xs text-muted-foreground">{item.label}</div>
-                </div>
-              ))}
+    <div className="min-h-screen bg-[#1a1a1d] text-[#f4eef1]">
+      <NavbarShell />
+      <main>
+        <section className="border-b border-white/10">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c77ba3]">About {SITE_CONFIG.name}</p>
+              <h1 className="mt-5 max-w-3xl text-4xl font-normal uppercase leading-tight tracking-wide sm:text-5xl">
+                A business directory built for serious comparison.
+              </h1>
+              <p className="mt-6 max-w-2xl text-sm leading-8 text-[#c9b0bc]">
+                {SITE_CONFIG.name} keeps business discovery focused on the details people actually need: what a company does, where it operates, and how to reach the right contact.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/listings" className="inline-flex items-center gap-2 rounded-md bg-[#a64d79] px-5 py-3 text-sm font-semibold text-white hover:bg-[#8a3d65]">
+                  Browse listings
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/contact" className="inline-flex items-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                  Contact us
+                </Link>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-        <div className="space-y-4">
-          {values.map((value) => (
-            <Card key={value.title} className="border-border bg-card">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-foreground">{value.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{value.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        {mockTeamMembers.map((member) => (
-          <Card key={member.id} className="border-border bg-card transition-transform hover:-translate-y-1">
-            <CardContent className="p-6">
+            <div className="rounded-md border border-white/10 bg-[#231f24] p-6 shadow-[0_24px_64px_rgba(0,0,0,0.25)]">
               <div className="flex items-center gap-3">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src={member.avatar} alt={member.name} />
-                  <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                </Avatar>
+                <Building2 className="h-7 w-7 text-[#c77ba3]" />
                 <div>
-                  <p className="text-sm font-semibold text-foreground">{member.name}</p>
-                  <p className="text-xs text-muted-foreground">{member.role}</p>
+                  <p className="text-sm font-semibold text-white">Directory operating model</p>
+                  <p className="text-xs text-[#a89ba5]">Structured, searchable, and built around business records.</p>
                 </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>
-              <p className="mt-3 text-xs text-muted-foreground">{member.location}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </PageShell>
-  );
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                {measures.map((item) => (
+                  <div key={item.label} className="border border-white/10 bg-white/5 p-4">
+                    <p className="text-2xl font-semibold text-white">{item.value}</p>
+                    <p className="mt-1 text-xs text-[#a89ba5]">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 space-y-3 text-sm text-[#d8c3cd]">
+                {['No noisy publishing lanes in the main experience', 'Listing cards tuned for fast vendor review', 'Search and category paths designed for repeat use'].map((item) => (
+                  <div key={item} className="flex gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#a64d79]" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="grid gap-4 md:grid-cols-3">
+            {principles.map((item) => (
+              <article key={item.title} className="border border-white/10 bg-white/5 p-6">
+                <item.icon className="h-6 w-6 text-[#c77ba3]" />
+                <h2 className="mt-4 text-xl font-semibold text-white">{item.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-[#c9b0bc]">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  )
 }

@@ -25,18 +25,20 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const variantShells = {
-  'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.08),transparent_24%),linear-gradient(180deg,#f8fbff_0%,#ffffff_100%)]',
-  'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)]',
-  'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.08),transparent_20%),linear-gradient(180deg,#fff8ef_0%,#ffffff_100%)]',
-  'article-journal': 'bg-[linear-gradient(180deg,#fffdf9_0%,#f7f1ea_100%)]',
-  'image-masonry': 'bg-[linear-gradient(180deg,#09101d_0%,#111c2f_100%)] text-white',
-  'image-portfolio': 'bg-[linear-gradient(180deg,#07111f_0%,#13203a_100%)] text-white',
-  'profile-creator': 'bg-[linear-gradient(180deg,#0a1120_0%,#101c34_100%)] text-white',
-  'profile-business': 'bg-[linear-gradient(180deg,#f6fbff_0%,#ffffff_100%)]',
-  'classified-bulletin': 'bg-[linear-gradient(180deg,#edf3e4_0%,#ffffff_100%)]',
-  'classified-market': 'bg-[linear-gradient(180deg,#f4f6ef_0%,#ffffff_100%)]',
-  'sbm-curation': 'bg-[linear-gradient(180deg,#fff7ee_0%,#ffffff_100%)]',
-  'sbm-library': 'bg-[linear-gradient(180deg,#f7f8fc_0%,#ffffff_100%)]',
+  'listing-directory':
+    'bg-[radial-gradient(ellipse_80%_50%_at_0%_0%,rgba(106,30,85,0.07),transparent_50%),linear-gradient(180deg,#f0e8ec_0%,#faf5f7_100%)]',
+  'listing-showcase':
+    'bg-[radial-gradient(circle_at_top_right,rgba(166,77,121,0.09),transparent_38%),linear-gradient(180deg,#f5eef2_0%,#ffffff_100%)]',
+  'article-editorial': 'bg-[#faf7f2] text-[#2a1f1a]',
+  'article-journal': 'bg-[#f3f0ea] text-[#241c15]',
+  'image-masonry': 'bg-[linear-gradient(180deg,#121015_0%,#1a1520_100%)] text-white',
+  'image-portfolio': 'bg-[linear-gradient(180deg,#0c0a0e_0%,#1a1218_100%)] text-[#e8d5e0]',
+  'profile-creator': 'bg-[linear-gradient(180deg,#100d12_0%,#1c141c_100%)] text-white',
+  'profile-business': 'bg-[#f2eef0] text-[#2b1f25]',
+  'classified-bulletin': 'bg-[#f8f1e8] text-[#3a2a1f]',
+  'classified-market': 'bg-[radial-gradient(circle_at_100%_0%,rgba(180,83,9,0.08),transparent_40%),#faf6f0]',
+  'sbm-curation': 'bg-[#f4f0eb] text-[#2d2622]',
+  'sbm-library': 'bg-[#f0f2f6] text-[#1f2330]',
 } as const
 
 export async function TaskListPage({ task, category }: { task: TaskKey; category?: string }) {
@@ -61,29 +63,66 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
   const Icon = taskIcons[task] || LayoutGrid
 
   const isDark = ['image-masonry', 'image-portfolio', 'profile-creator'].includes(layoutKey)
+  const isClassified = layoutKey.startsWith('classified')
+  const isArticle = layoutKey.startsWith('article')
+  const isSbm = layoutKey.startsWith('sbm')
+  const isProfile = layoutKey.startsWith('profile')
+  const isListing = layoutKey.startsWith('listing')
   const ui = isDark
     ? {
         muted: 'text-slate-300',
         panel: 'border border-white/10 bg-white/6',
         soft: 'border border-white/10 bg-white/5',
         input: 'border-white/10 bg-white/6 text-white',
-        button: 'bg-white text-slate-950 hover:bg-slate-200',
+        button: 'bg-[#a64d79] text-white hover:brightness-110',
       }
-    : layoutKey.startsWith('article') || layoutKey.startsWith('sbm')
+    : isArticle
       ? {
-          muted: 'text-[#72594a]',
-          panel: 'border border-[#dbc6b6] bg-white/90',
-          soft: 'border border-[#dbc6b6] bg-[#fff8ef]',
-          input: 'border border-[#dbc6b6] bg-white text-[#2f1d16]',
-          button: 'bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
+          muted: 'text-[#6a5548]',
+          panel: 'border border-[#d9cfc4] bg-white/95',
+          soft: 'border border-[#d9cfc4] bg-[#fff9f0]',
+          input: 'border border-[#c9b8a8] bg-white text-[#2a1f1a]',
+          button: 'bg-[#2a1f1a] text-[#fff6ea] hover:bg-[#1a140f]',
         }
-      : {
-          muted: 'text-slate-600',
-          panel: 'border border-slate-200 bg-white',
-          soft: 'border border-slate-200 bg-slate-50',
-          input: 'border border-slate-200 bg-white text-slate-950',
-          button: 'bg-slate-950 text-white hover:bg-slate-800',
-        }
+      : isSbm
+        ? {
+            muted: 'text-[#5a5661]',
+            panel: 'border border-[#c8c8d2] bg-white/95',
+            soft: 'border border-[#c8c8d2] bg-[#f3f2f5]',
+            input: 'border border-border bg-white text-foreground',
+            button: 'bg-primary text-primary-foreground hover:brightness-105',
+          }
+        : isClassified
+          ? {
+              muted: 'text-[#6a5340]',
+              panel: 'border border-amber-900/10 bg-white/90',
+              soft: 'border border-amber-900/10 bg-amber-50/50',
+              input: 'border border-amber-900/15 bg-white text-[#3a2a1f]',
+              button: 'bg-[#b45309] text-white hover:bg-[#9a4508]',
+            }
+          : isProfile
+            ? {
+                muted: 'text-muted-foreground',
+                panel: 'border border-border bg-card',
+                soft: 'border border-border bg-muted/60',
+                input: 'border border-border bg-background text-foreground',
+                button: 'bg-primary text-primary-foreground hover:brightness-105',
+              }
+            : isListing
+              ? {
+                  muted: 'text-muted-foreground',
+                  panel: 'border border-primary/10 bg-card shadow-sm',
+                  soft: 'border border-border bg-background',
+                  input: 'border border-border bg-card text-foreground',
+                  button: 'bg-primary text-primary-foreground hover:brightness-105',
+                }
+              : {
+                  muted: 'text-muted-foreground',
+                  panel: 'border border-border bg-card',
+                  soft: 'border border-border bg-muted/50',
+                  input: 'border border-border bg-card text-foreground',
+                  button: 'bg-foreground text-background hover:opacity-90',
+                }
 
   return (
     <div className={`min-h-screen ${shellClass}`}>
@@ -122,16 +161,23 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
 
         {layoutKey === 'listing-directory' || layoutKey === 'listing-showcase' ? (
           <section className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div className={`rounded-[2rem] p-7 shadow-[0_24px_70px_rgba(15,23,42,0.07)] ${ui.panel}`}>
-              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70"><Icon className="h-4 w-4" /> {taskConfig?.label || task}</div>
-              <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>Built with a cleaner scan rhythm, stronger metadata grouping, and a structure designed for business discovery rather than editorial reading.</p>
+            <div className={`rounded-md p-7 shadow-sm ${ui.panel}`}>
+              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-primary/80">
+                <Icon className="h-4 w-4" /> {taskConfig?.label || task}
+              </div>
+              <h1 className="mt-4 text-4xl font-normal uppercase leading-tight tracking-[0.04em] text-foreground">
+                {taskConfig?.description || 'Business listings'}
+              </h1>
+              <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>
+                Category, geography, and contact points lead every row; imagery is optional context. Use filters to compare
+                businesses like records in a register.
+              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href={taskConfig?.route || '#'} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.button}`}>Explore results <ArrowRight className="h-4 w-4" /></Link>
                 <Link href="/search" className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.soft}`}>Open search</Link>
               </div>
             </div>
-            <form className={`grid gap-3 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] ${ui.soft}`} action={taskConfig?.route || '#'}>
+            <form className={`grid gap-3 rounded-md p-6 shadow-sm ${ui.soft}`} action={taskConfig?.route || '#'}>
               <div>
                 <label className={`text-xs uppercase tracking-[0.2em] ${ui.muted}`}>Category</label>
                 <select name="category" defaultValue={normalizedCategory} className={`mt-2 h-11 w-full rounded-xl px-3 text-sm ${ui.input}`}>
