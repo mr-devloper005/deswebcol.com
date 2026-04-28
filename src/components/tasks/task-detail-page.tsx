@@ -371,8 +371,8 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   )}
                   {location && (
                     <div className="flex items-start gap-2">
-                      <MapPin className="mt-0.5 h-4 w-4" />
-                      <span>{location}</span>
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span className="break-words">{location}</span>
                     </div>
                   )}
                 </div>
@@ -443,8 +443,8 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   )}
                   {location && (
                     <div className="flex items-start gap-2">
-                      <MapPin className="mt-0.5 h-4 w-4" />
-                      <span>{location}</span>
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span className="break-words">{location}</span>
                     </div>
                   )}
                 </div>

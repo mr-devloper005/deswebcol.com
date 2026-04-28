@@ -6,13 +6,11 @@ export const siteContent = {
   },
   footer: {
     tagline: 'Structured business directory',
-    exploreMoreTitle: 'Also on this site',
+    exploreMoreTitle: 'More',
     exploreMore: [
-      { label: 'Articles', href: '/articles' },
-      { label: 'Image posts', href: '/images' },
-      { label: 'Profiles', href: '/profile' },
-      { label: 'Bookmarks', href: '/sbm' },
-      { label: 'PDF library', href: '/pdf' },
+      { label: 'Business Listings', href: '/listings' },
+      { label: 'Search Directory', href: '/search' },
+      { label: 'Contact', href: '/contact' },
     ] as const,
   },
   hero: {
@@ -25,8 +23,8 @@ export const siteContent = {
       href: '/listings',
     },
     secondaryCta: {
-      label: 'Browse classifieds',
-      href: '/classifieds',
+      label: 'Search listings',
+      href: '/search',
     },
     searchPlaceholder: 'Search companies, services, and categories',
     focusLabel: 'Index',
@@ -39,7 +37,7 @@ export const siteContent = {
     metadata: {
       title: 'Deswebcol — business listings built for serious comparison',
       description:
-        'Search verified business listings and classifieds with a layout that foregrounds company facts, service scope, and contact channels.',
+        'Search verified business listings with a layout that foregrounds company facts, service scope, and contact channels.',
       openGraphTitle: 'Deswebcol — data-first business listings',
       openGraphDescription:
         'Compare companies with a directory interface designed around categories, operating areas, and clear contact metadata.',
@@ -48,7 +46,7 @@ export const siteContent = {
         'company listings',
         'B2B discovery',
         'local services',
-        'classifieds',
+        'business listings',
         'Deswebcol',
       ],
     },
@@ -57,12 +55,12 @@ export const siteContent = {
     introParagraphs: [
       'Deswebcol is tuned for operators, procurement teams, and owners who need accurate labels—what a business does, where it operates, and how to reach a human—without wading through visual noise.',
       'The primary experience is the business listing: structured fields, transparent categories, and a scan rhythm that mirrors a spreadsheet more than a magazine cover.',
-      'Classifieds sit alongside as a faster lane for time-bound offers, while other content types remain available when you need deeper context.',
+      'The experience stays focused on business listings so teams can compare options quickly with less distraction.',
     ],
     sideBadge: 'Index principles',
     sidePoints: [
       'Contact and category data lead every surface; imagery is secondary.',
-      'Listings and classifieds are the only tasks promoted in main navigation; everything else stays reachable by URL and search.',
+      'Listings are the only primary content surface in main navigation.',
       'Motion and colour reinforce hierarchy, not decoration.',
       'The interface stays fast: CSS-first animation, no heavy client scripts for visuals.',
     ],
@@ -71,13 +69,13 @@ export const siteContent = {
       href: '/listings',
     },
     secondaryLink: {
-      label: 'Open classifieds',
-      href: '/classifieds',
+      label: 'Search listings',
+      href: '/search',
     },
   },
   cta: {
     badge: 'List or respond',
-    title: 'Claim a slot in the index or post a time-sensitive offer in classifieds.',
+    title: 'Claim a slot in the business listings index.',
     description:
       'Registration keeps owner workflows intact while the public site stays focused on discoverable business facts.',
     primaryCta: {
@@ -133,12 +131,12 @@ export const taskIntroCopy: Record<
     paragraphs: [
       'Each record is organised so you can read it like a company dossier: legal name, category, geography, and contact points appear before marketing copy.',
       'Thumbnails and galleries are present when supplied, but they never crowd out the operational facts procurement teams need on first glance.',
-      'Filter by category when you are comparing vendors; jump into classifieds when you are tracking time-boxed opportunities.',
+      'Filter by category when you are comparing vendors and move quickly through records with clean, consistent fields.',
     ],
     links: [
-      { label: 'Search classifieds', href: '/classifieds' },
-      { label: 'Read articles', href: '/articles' },
-      { label: 'View profiles', href: '/profile' },
+      { label: 'Search listings', href: '/search' },
+      { label: 'Create account', href: '/register' },
+      { label: 'Contact', href: '/contact' },
     ],
   },
   article: {

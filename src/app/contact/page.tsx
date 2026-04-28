@@ -1,111 +1,75 @@
-import { Building2, FileText, Image as ImageIcon, Mail, MapPin, Phone, Sparkles, Bookmark } from 'lucide-react'
+import { Building2, Mail, MapPin, MessageSquare, Phone, ShieldCheck } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { SITE_CONFIG } from '@/lib/site-config'
-import { getFactoryState } from '@/design/factory/get-factory-state'
-import { getProductKind } from '@/design/factory/get-product-kind'
 import { CONTACT_PAGE_OVERRIDE_ENABLED, ContactPageOverride } from '@/overrides/contact-page'
 
-function getTone(kind: ReturnType<typeof getProductKind>) {
-  if (kind === 'directory') {
-    return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      soft: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
-    }
-  }
-  if (kind === 'editorial') {
-    return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      soft: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
-    }
-  }
-  if (kind === 'visual') {
-    return {
-      shell: 'bg-[#07101f] text-white',
-      panel: 'border border-white/10 bg-white/6',
-      soft: 'border border-white/10 bg-white/5',
-      muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
-    }
-  }
-  return {
-    shell: 'bg-[#f7f1ea] text-[#261811]',
-    panel: 'border border-[#ddcdbd] bg-[#fffaf4]',
-    soft: 'border border-[#e8dbce] bg-[#f3e8db]',
-    muted: 'text-[#71574a]',
-    action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
-  }
-}
+const lanes = [
+  { icon: Building2, title: 'Listing support', body: 'Request updates to business details, categories, ownership notes, or display information.' },
+  { icon: ShieldCheck, title: 'Verification help', body: 'Ask about claim status, evidence, duplicate records, or corrections to trusted listing data.' },
+  { icon: MapPin, title: 'Coverage requests', body: 'Tell us about missing local areas, service categories, or business clusters we should index next.' },
+]
+
+const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'support@deswebcol.com'
 
 export default function ContactPage() {
   if (CONTACT_PAGE_OVERRIDE_ENABLED) {
     return <ContactPageOverride />
   }
 
-  const { recipe } = getFactoryState()
-  const productKind = getProductKind(recipe)
-  const tone = getTone(productKind)
-  const lanes =
-    productKind === 'directory'
-      ? [
-          { icon: Building2, title: 'Business onboarding', body: 'Add listings, verify operational details, and bring your business surface live quickly.' },
-          { icon: Phone, title: 'Partnership support', body: 'Talk through bulk publishing, local growth, and operational setup questions.' },
-          { icon: MapPin, title: 'Coverage requests', body: 'Need a new geography or category lane? We can shape the directory around it.' },
-        ]
-      : productKind === 'editorial'
-        ? [
-            { icon: FileText, title: 'Editorial submissions', body: 'Pitch essays, columns, and long-form ideas that fit the publication.' },
-            { icon: Mail, title: 'Newsletter partnerships', body: 'Coordinate sponsorships, collaborations, and issue-level campaigns.' },
-            { icon: Sparkles, title: 'Contributor support', body: 'Get help with voice, formatting, and publication workflow questions.' },
-          ]
-        : productKind === 'visual'
-          ? [
-              { icon: ImageIcon, title: 'Creator collaborations', body: 'Discuss gallery launches, creator features, and visual campaigns.' },
-              { icon: Sparkles, title: 'Licensing and use', body: 'Reach out about usage rights, commercial requests, and visual partnerships.' },
-              { icon: Mail, title: 'Media kits', body: 'Request creator decks, editorial support, or visual feature placement.' },
-            ]
-          : [
-              { icon: Bookmark, title: 'Collection submissions', body: 'Suggest resources, boards, and links that deserve a place in the library.' },
-              { icon: Mail, title: 'Resource partnerships', body: 'Coordinate curation projects, reference pages, and link programs.' },
-              { icon: Sparkles, title: 'Curator support', body: 'Need help organizing shelves, collections, or profile-connected boards?' },
-            ]
-
   return (
-    <div className={`min-h-screen ${tone.shell}`}>
+    <div className="min-h-screen bg-[#1a1a1d] text-[#f4eef1]">
       <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+        <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Contact {SITE_CONFIG.name}</p>
-            <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em]">A support page that matches the product, not a generic contact form.</h1>
-            <p className={`mt-5 max-w-2xl text-sm leading-8 ${tone.muted}`}>Tell us what you are trying to publish, fix, or launch. We will route it through the right lane instead of forcing every request into the same support bucket.</p>
-            <div className="mt-8 space-y-4">
-              {lanes.map((lane) => (
-                <div key={lane.title} className={`rounded-[1.6rem] p-5 ${tone.soft}`}>
-                  <lane.icon className="h-5 w-5" />
-                  <h2 className="mt-3 text-xl font-semibold">{lane.title}</h2>
-                  <p className={`mt-2 text-sm leading-7 ${tone.muted}`}>{lane.body}</p>
-                </div>
-              ))}
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c77ba3]">Contact {SITE_CONFIG.name}</p>
+            <h1 className="mt-5 text-4xl font-normal uppercase leading-tight tracking-wide sm:text-5xl">
+              Reach the right desk for business listing work.
+            </h1>
+            <p className="mt-6 max-w-xl text-sm leading-8 text-[#c9b0bc]">
+              Send listing corrections, claim requests, coverage ideas, or partnership questions. We route messages by operational need instead of treating every request like a generic support ticket.
+            </p>
+            <div className="mt-8 grid gap-3">
+              <div className="flex gap-3 border border-white/10 bg-white/5 p-4 text-sm text-[#d8c3cd]">
+                <Mail className="h-5 w-5 text-[#c77ba3]" />
+                {contactEmail}
+              </div>
+              <div className="flex gap-3 border border-white/10 bg-white/5 p-4 text-sm text-[#d8c3cd]">
+                <Phone className="h-5 w-5 text-[#c77ba3]" />
+                Response window: 1-2 business days
+              </div>
             </div>
           </div>
 
-          <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
-            <h2 className="text-2xl font-semibold">Send a message</h2>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Your name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What do you need help with?" />
-              <textarea className="min-h-[180px] rounded-2xl border border-current/10 bg-transparent px-4 py-3 text-sm" placeholder="Share the full context so we can respond with the right next step." />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>Send message</button>
-            </form>
+          <div className="grid gap-5">
+            {lanes.map((lane) => (
+              <article key={lane.title} className="border border-white/10 bg-[#231f24] p-6">
+                <lane.icon className="h-6 w-6 text-[#c77ba3]" />
+                <h2 className="mt-4 text-xl font-semibold text-white">{lane.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-[#c9b0bc]">{lane.body}</p>
+              </article>
+            ))}
           </div>
+        </section>
+
+        <section className="mt-12 grid gap-8 border-t border-white/10 pt-10 lg:grid-cols-[1fr_1fr]">
+          <div className="border border-white/10 bg-white/5 p-6">
+            <MessageSquare className="h-6 w-6 text-[#c77ba3]" />
+            <h2 className="mt-4 text-2xl font-semibold text-white">Send a message</h2>
+            <p className="mt-2 text-sm leading-7 text-[#c9b0bc]">
+              Include the listing name, URL, category, and the exact detail that needs attention.
+            </p>
+          </div>
+          <form className="grid gap-4">
+            <input className="h-12 border border-white/10 bg-[#231f24] px-4 text-sm text-white placeholder:text-[#a89ba5]" placeholder="Your name" />
+            <input className="h-12 border border-white/10 bg-[#231f24] px-4 text-sm text-white placeholder:text-[#a89ba5]" placeholder="Email address" />
+            <input className="h-12 border border-white/10 bg-[#231f24] px-4 text-sm text-white placeholder:text-[#a89ba5]" placeholder="Listing or request type" />
+            <textarea className="min-h-36 border border-white/10 bg-[#231f24] px-4 py-3 text-sm text-white placeholder:text-[#a89ba5]" placeholder="Share the full context." />
+            <button type="submit" className="inline-flex h-12 items-center justify-center rounded-md bg-[#a64d79] px-6 text-sm font-semibold text-white hover:bg-[#8a3d65]">
+              Send message
+            </button>
+          </form>
         </section>
       </main>
       <Footer />
