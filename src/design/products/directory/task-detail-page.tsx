@@ -1,4 +1,7 @@
+"use client"
+
 import Link from 'next/link'
+import { useState } from 'react'
 import {
   CheckCircle2,
   ExternalLink,
@@ -16,6 +19,8 @@ import {
 import { ContentImage } from '@/components/shared/content-image'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { TaskPostCard } from '@/components/shared/task-post-card'
+import { RichContent, formatRichHtml } from '@/components/shared/rich-content'
+import { ImageModal } from '@/components/shared/image-modal'
 import type { SitePost } from '@/lib/site-connector'
 import type { TaskKey } from '@/lib/site-config'
 
@@ -40,6 +45,7 @@ export function DirectoryTaskDetailPage({
   mapEmbedUrl: string | null
   related: SitePost[]
 }) {
+  const [modalImage, setModalImage] = useState<string | null>(null)
   const content = post.content && typeof post.content === 'object' ? (post.content as Record<string, unknown>) : {}
   const location = typeof content.address === 'string' ? content.address : typeof content.location === 'string' ? content.location : ''
   const website = typeof content.website === 'string' ? content.website : ''
@@ -53,6 +59,7 @@ export function DirectoryTaskDetailPage({
   const directionsUrl = location
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
     : ''
+  const descriptionHtml = formatRichHtml(description, 'Details coming soon.')
   const schemaPayload = {
     '@context': 'https://schema.org',
     '@type': task === 'profile' ? 'Organization' : 'LocalBusiness',
@@ -88,19 +95,25 @@ export function DirectoryTaskDetailPage({
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
           <div>
             <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden bg-white p-8 sm:min-h-[440px]">
-              <ContentImage
-                src={logo || '/placeholder.svg?height=900&width=1400'}
-                alt={`${post.title} logo`}
-                fill
-                className="object-contain"
-                intrinsicWidth={1200}
-                intrinsicHeight={900}
-              />
+              <button
+                onClick={() => setModalImage(logo || '/placeholder.svg?height=900&width=1400')}
+                className="cursor-pointer"
+                aria-label="Open image in modal"
+              >
+                <ContentImage
+                  src={logo || '/placeholder.svg?height=900&width=1400'}
+                  alt={`${post.title} logo`}
+                  fill
+                  className="object-contain"
+                  intrinsicWidth={1200}
+                  intrinsicHeight={900}
+                />
+              </button>
             </div>
 
             <section className="mt-10 max-w-3xl">
               <h2 className="text-xl font-medium text-[#005ee8]">{post.title}</h2>
-              <p className="mt-6 text-sm leading-7 text-[#38425c]">{description}</p>
+              <RichContent html={descriptionHtml} className="mt-6 text-sm leading-7 text-[#38425c]" />
             </section>
 
             <section className="mt-8 flex items-center gap-4 bg-[#f7f7f9] px-5 py-4">
@@ -125,9 +138,14 @@ export function DirectoryTaskDetailPage({
                 <h2 className="text-sm font-semibold text-[#24314f]">Gallery</h2>
                 <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {images.slice(1, 5).map((image) => (
-                    <div key={image} className="relative aspect-[4/3] overflow-hidden border border-[#e4e7ee] bg-white">
+                    <button
+                      key={image}
+                      onClick={() => setModalImage(image)}
+                      className="relative aspect-[4/3] overflow-hidden border border-[#e4e7ee] bg-white cursor-pointer hover:opacity-80 transition"
+                      aria-label="Open image in modal"
+                    >
                       <ContentImage src={image} alt={`${post.title} gallery`} fill className="object-cover" />
-                    </div>
+                    </button>
                   ))}
                 </div>
               </section>
@@ -315,6 +333,12 @@ export function DirectoryTaskDetailPage({
           </section>
         ) : null}
       </main>
+      <ImageModal
+        isOpen={modalImage !== null}
+        imageUrl={modalImage}
+        alt={post.title}
+        onClose={() => setModalImage(null)}
+      />
     </div>
   )
 }
