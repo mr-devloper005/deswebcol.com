@@ -40,7 +40,6 @@ const footerLinks = {
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
     { name: 'Cookies', href: '/cookies' },
-    { name: 'Licenses', href: '/licenses' },
   ],
 }
 
@@ -86,9 +85,7 @@ export function Footer() {
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr_1fr]">
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/12 bg-white/8 p-1.5">
-                  <img src="/favicon.png?v=20260424" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
-                </div>
+                <img src="/favicon.png?v=20260424" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-12 w-12 object-contain" />
                 <div>
                   <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
                   <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{siteContent.footer.tagline}</p>
@@ -178,9 +175,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr_0.9fr_0.9fr_0.9fr]">
           <div>
             <Link href="/" className="flex items-center gap-3">
-              <div className="h-11 w-11 overflow-hidden rounded-md border border-border bg-background p-1">
-                <img src="/favicon.png?v=20260424" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
-              </div>
+              <img src="/favicon.png?v=20260424" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-11 w-11 object-contain" />
               <div>
                 <span className="block text-lg font-medium uppercase tracking-wide">{SITE_CONFIG.name}</span>
                 <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{siteContent.footer.tagline}</span>

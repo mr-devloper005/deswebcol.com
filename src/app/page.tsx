@@ -158,11 +158,7 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts }: {
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
-              <div className={`registry-live-rail inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.28em] ${tone.badgeOnDark}`}>
-                <span className="h-1.5 w-1.5 rounded-full bg-[#a64d79]" aria-hidden />
-                {siteContent.hero.badge}
-              </div>
-              <h1 className={`mt-6 max-w-[22ch] text-4xl font-normal uppercase leading-[1.05] tracking-[0.02em] sm:text-5xl lg:text-6xl ${tone.titleOnDark}`}>
+              <h1 className={`max-w-[22ch] text-4xl font-normal uppercase leading-[1.05] tracking-[0.02em] sm:text-5xl lg:text-6xl ${tone.titleOnDark}`}>
                 <span className="registry-hero-line block">{siteContent.hero.title[0]}</span>
                 <span className="registry-hero-line block text-[#c77ba3]">{siteContent.hero.title[1]}</span>
               </h1>
@@ -185,54 +181,9 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts }: {
                   Search the index
                 </Link>
               </div>
-              <div className="mt-10 grid gap-3 sm:grid-cols-3">
-                {[
-                  { k: 'Fields first', v: 'Category · area · contact before imagery' },
-                  { k: 'Listings only', v: 'Business records stay clean and consistent' },
-                  { k: 'Index rhythm', v: 'Built to skim like a register, not a feed' },
-                ].map((row) => (
-                  <div key={row.k} className="rounded-md border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#a89ba5]">{row.k}</p>
-                    <p className="mt-2 text-sm font-medium text-[#f4eef1]">{row.v}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="rounded-md border border-white/10 bg-[#231f24] p-6 text-[#e8d5de] shadow-[0_24px_64px_rgba(0,0,0,0.35)]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#a89ba5]">Index snapshot</p>
-                <div className="mt-4 space-y-3 font-mono text-xs leading-relaxed text-[#d8c3cd]">
-                  {indexRows.length
-                    ? indexRows.map((post) => {
-                        const meta = getPostMeta(post)
-                        return (
-                          <div
-                            key={post.id}
-                            className="grid min-w-0 gap-1 border-b border-white/5 pb-3 last:border-0 sm:grid-cols-[minmax(0,1fr)_minmax(8rem,14rem)] sm:gap-4"
-                          >
-                            <span className="min-w-0 truncate text-[#faf5f7]" title={post.title}>{post.title}</span>
-                            <span className="min-w-0 truncate text-left text-[#a64d79] sm:text-right" title={meta.location || '—'}>
-                              {meta.location || '—'}
-                            </span>
-                          </div>
-                        )
-                      })
-                    : ['No live rows yet', 'Listings will stream here', 'Connector or mock data loads this block'].map((l) => (
-                        <p key={l} className="text-[#7a6e76]">
-                          {l}
-                        </p>
-                      ))}
-                </div>
-                <div className="mt-4 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-[#6a1e55]">
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" /> live rail
-                  </span>
-                  <span>deswebcol registry</span>
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
                 {quickRoutes.map((task) => {
                   const Icon = taskIcons[task.key as TaskKey] || LayoutGrid
                   return (
@@ -252,10 +203,9 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts }: {
                   )
                 })}
               </div>
-            </div>
           </div>
         </div>
-        <div className={`h-1 w-full bg-linear-to-r ${tone.line} opacity-90`} />
+        <div className={`h-1 w-full bg-gradient-to-r ${tone.line} opacity-90`} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
