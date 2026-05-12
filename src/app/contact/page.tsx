@@ -1,4 +1,4 @@
-import { Building2, Mail, MapPin, MessageSquare, Phone, ShieldCheck } from 'lucide-react'
+import { Building2, MapPin, MessageSquare, ShieldCheck } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { SITE_CONFIG } from '@/lib/site-config'
@@ -9,8 +9,6 @@ const lanes = [
   { icon: ShieldCheck, title: 'Verification help', body: 'Ask about claim status, evidence, duplicate records, or corrections to trusted listing data.' },
   { icon: MapPin, title: 'Coverage requests', body: 'Tell us about missing local areas, service categories, or business clusters we should index next.' },
 ]
-
-const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'support@deswebcol.com'
 
 export default function ContactPage() {
   if (CONTACT_PAGE_OVERRIDE_ENABLED) {
@@ -30,16 +28,6 @@ export default function ContactPage() {
             <p className="mt-6 max-w-xl text-sm leading-8 text-[#c9b0bc]">
               Send listing corrections, claim requests, coverage ideas, or partnership questions. We route messages by operational need instead of treating every request like a generic support ticket.
             </p>
-            <div className="mt-8 grid gap-3">
-              <div className="flex gap-3 border border-white/10 bg-white/5 p-4 text-sm text-[#d8c3cd]">
-                <Mail className="h-5 w-5 text-[#c77ba3]" />
-                {contactEmail}
-              </div>
-              <div className="flex gap-3 border border-white/10 bg-white/5 p-4 text-sm text-[#d8c3cd]">
-                <Phone className="h-5 w-5 text-[#c77ba3]" />
-                Response window: 1-2 business days
-              </div>
-            </div>
           </div>
 
           <div className="grid gap-5">

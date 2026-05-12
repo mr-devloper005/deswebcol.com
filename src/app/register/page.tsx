@@ -1,22 +1,28 @@
+'use client'
+
 import Link from 'next/link'
+import { useState, type FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
+import { useToast } from '@/components/ui/use-toast'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
+import { useAuth } from '@/lib/auth-context'
 import { REGISTER_PAGE_OVERRIDE_ENABLED, RegisterPageOverride } from '@/overrides/register-page'
 
 function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      side: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      shell: 'bg-[radial-gradient(ellipse_80%_50%_at_0%_0%,rgba(106,30,85,0.07),transparent_50%),linear-gradient(180deg,#f0e8ec_0%,#faf5f7_100%)] text-slate-950',
+      panel: 'border border-primary/10 bg-card shadow-sm',
+      side: 'border border-border bg-background',
+      muted: 'text-muted-foreground',
+      action: 'bg-primary text-primary-foreground hover:brightness-105',
       icon: Building2,
-      title: 'Create a business-ready account',
-      body: 'List services, manage locations, and activate trust signals with a proper directory workflow.',
+      title: 'Create your business profile',
+      body: 'Join our business discovery platform to showcase your services, connect with local customers, and grow your online presence with powerful listing tools.',
     }
   }
   if (kind === 'editorial') {
@@ -60,10 +66,38 @@ export default function RegisterPage() {
     return <RegisterPageOverride />
   }
 
+  const router = useRouter()
+  const { toast } = useToast()
+  const { login, isLoading } = useAuth()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [businessType, setBusinessType] = useState('')
+
   const { recipe } = getFactoryState()
   const productKind = getProductKind(recipe)
   const config = getRegisterConfig(productKind)
   const Icon = config.icon
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (!name || !email || !password) {
+      toast({
+        title: 'Missing information',
+        description: 'Please fill in all required fields.',
+      })
+      return
+    }
+
+    // Simulate registration - in a real app, this would call a registration API
+    await login(email, password)
+    toast({
+      title: 'Account created successfully',
+      description: 'Welcome to our business directory platform!',
+    })
+    router.push('/')
+  }
 
   return (
     <div className={`min-h-screen ${config.shell}`}>
@@ -75,7 +109,7 @@ export default function RegisterPage() {
             <h1 className="mt-5 text-4xl font-semibold tracking-[-0.05em]">{config.title}</h1>
             <p className={`mt-5 text-sm leading-8 ${config.muted}`}>{config.body}</p>
             <div className="mt-8 grid gap-4">
-              {['Different onboarding per product family', 'No repeated one-size-fits-all shell', 'Profile, publishing, and discovery aligned'].map((item) => (
+              {['Enhanced business visibility', 'Customer review management', 'Performance insights dashboard'].map((item) => (
                 <div key={item} className="rounded-[1.5rem] border border-current/10 px-4 py-4 text-sm">{item}</div>
               ))}
             </div>
@@ -83,12 +117,45 @@ export default function RegisterPage() {
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Create account</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Create account</button>
+            <form className="mt-6 grid gap-4" onSubmit={handleSubmit}>
+              <input
+                className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm"
+                placeholder="Business name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                required
+              />
+              <input
+                className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm"
+                placeholder="Email address"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                autoComplete="email"
+                required
+              />
+              <input
+                className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm"
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                autoComplete="new-password"
+                required
+              />
+              <input
+                className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm"
+                placeholder="Business category (e.g., Restaurant, Retail, Services)"
+                value={businessType}
+                onChange={(event) => setBusinessType(event.target.value)}
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action} disabled:cursor-not-allowed disabled:opacity-70`}
+              >
+                {isLoading ? 'Creating account...' : 'Create account'}
+              </button>
             </form>
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <span>Already have an account?</span>
