@@ -15,14 +15,14 @@ import { LOGIN_PAGE_OVERRIDE_ENABLED, LoginPageOverride } from '@/overrides/logi
 function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      side: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      shell: 'bg-[radial-gradient(ellipse_80%_50%_at_0%_0%,rgba(106,30,85,0.07),transparent_50%),linear-gradient(180deg,#f0e8ec_0%,#faf5f7_100%)] text-slate-950',
+      panel: 'border border-primary/10 bg-card shadow-sm',
+      side: 'border border-border bg-background',
+      muted: 'text-muted-foreground',
+      action: 'bg-primary text-primary-foreground hover:brightness-105',
       icon: Building2,
       title: 'Access your business dashboard',
-      body: 'Manage listings, verification details, contact info, and local discovery surfaces from one place.',
+      body: 'Manage your business listings, update contact information, track performance metrics, and connect with local customers through our comprehensive business discovery platform.',
     }
   }
   if (kind === 'editorial') {
@@ -106,7 +106,7 @@ export default function LoginPage() {
             <h1 className="mt-5 text-4xl font-semibold tracking-[-0.05em]">{config.title}</h1>
             <p className={`mt-5 text-sm leading-8 ${config.muted}`}>{config.body}</p>
             <div className="mt-8 grid gap-4">
-              {['Cleaner product-specific workflows', 'Palette and layout matched to the site family', 'Fewer repeated admin patterns'].map((item) => (
+              {['Complete business listing management', 'Customer engagement analytics', 'Local discovery optimization'].map((item) => (
                 <div key={item} className="rounded-[1.5rem] border border-current/10 px-4 py-4 text-sm">{item}</div>
               ))}
             </div>

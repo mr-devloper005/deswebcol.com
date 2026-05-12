@@ -1,14 +1,8 @@
 import Link from 'next/link'
-import { ArrowRight, BriefcaseBusiness, CheckCircle2, Database, MapPinned, Search } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Database, MapPinned, Search } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { SITE_CONFIG } from '@/lib/site-config'
-
-const roles = [
-  { title: 'Directory Operations Lead', location: 'Remote', type: 'Full-time', focus: 'Listing quality, category hygiene, and verification queues.' },
-  { title: 'Frontend Product Engineer', location: 'Hybrid / Remote', type: 'Full-time', focus: 'Fast listing workflows, search surfaces, and owner dashboards.' },
-  { title: 'Local Data Researcher', location: 'Flexible', type: 'Contract', focus: 'Coverage mapping, business record cleanup, and regional expansion.' },
-]
 
 const traits = [
   'Comfortable turning messy business information into structured records',
@@ -41,28 +35,10 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
-          <div className="space-y-4">
-            {roles.map((role) => (
-              <article key={role.title} className="border border-white/10 bg-[#231f24] p-6">
-                <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase text-[#c77ba3]">
-                  <span className="border border-white/10 px-2 py-1">{role.type}</span>
-                  <span className="border border-white/10 px-2 py-1">{role.location}</span>
-                </div>
-                <h2 className="mt-4 text-2xl font-semibold text-white">{role.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-[#c9b0bc]">{role.focus}</p>
-                <Link href="/contact" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#c77ba3] hover:text-white">
-                  Discuss role
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </article>
-            ))}
-          </div>
-
+        <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <aside className="space-y-5">
             <div className="border border-white/10 bg-white/5 p-6">
-              <BriefcaseBusiness className="h-7 w-7 text-[#c77ba3]" />
-              <h2 className="mt-4 text-2xl font-semibold text-white">How we work</h2>
+              <h2 className="text-2xl font-semibold text-white">How we work</h2>
               <p className="mt-3 text-sm leading-7 text-[#c9b0bc]">
                 Small teams, direct ownership, quiet tools, and a bias toward accuracy over noise.
               </p>

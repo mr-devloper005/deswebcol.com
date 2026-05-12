@@ -127,65 +127,67 @@ export function TaskPostCard({
     return (
       <Link
         href={href}
-        className={`group flex h-full min-h-0 flex-row gap-0 overflow-hidden ${cardTone.frame}`}
+        className={`group flex h-full min-h-0 flex-col overflow-hidden ${cardTone.frame}`}
       >
-        <div className="relative h-full w-40 shrink-0 bg-muted/50 sm:w-48">
+        <div className="relative aspect-[4/3] w-full bg-muted/50">
           <ContentImage
             src={image}
             alt={altText}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 42vw, 340px"
             quality={70}
             className="object-cover opacity-90 transition duration-300 group-hover:opacity-100"
             intrinsicWidth={320}
-            intrinsicHeight={320}
+            intrinsicHeight={240}
           />
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col p-5">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span
               className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] ${cardTone.badge}`}
             >
               <Tag className="h-3 w-3" />
               {category}
             </span>
+          </div>
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col p-4">
+          <div className="flex items-center justify-between">
             <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
               {variant === 'classified' ? 'Classified' : 'Business record'}
             </span>
+            <ArrowUpRight className={`h-4 w-4 shrink-0 ${cardTone.muted}`} />
           </div>
-          <div className="mt-3 flex min-w-0 items-start justify-between gap-2">
-            <h3 className={`line-clamp-2 min-w-0 overflow-hidden text-lg font-medium leading-snug ${cardTone.title}`}>
-              {post.title}
-            </h3>
-            <ArrowUpRight className={`mt-0.5 h-4 w-4 shrink-0 ${cardTone.muted}`} />
-          </div>
+          <h3 className={`mt-2 line-clamp-2 text-lg font-medium leading-snug ${cardTone.title}`}>
+            {post.title}
+          </h3>
           <p className={`mt-2 line-clamp-3 text-sm leading-relaxed ${cardTone.muted}`}>
             {getExcerpt(content.description || post.summary) || 'Review operating details, contacts, and category on the full record.'}
           </p>
-          <div className="mt-4 flex flex-col gap-1.5 text-xs sm:flex-row sm:flex-wrap sm:gap-x-4 sm:gap-y-1">
-            {content.location ? (
-              <span className={`inline-flex min-w-0 items-center gap-1.5 font-medium ${cardTone.muted}`}>
-                <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" />
-                <span className="break-words">{content.location}</span>
-              </span>
-            ) : null}
-            {content.email ? (
-              <span className={`inline-flex min-w-0 items-center gap-1.5 ${cardTone.muted}`}>
-                <Mail className="h-3.5 w-3.5 shrink-0 text-primary" />
-                <span className="break-words">{content.email}</span>
-              </span>
-            ) : null}
-            {content.phone ? (
-              <span className={`inline-flex items-center gap-1.5 ${cardTone.muted}`}>
-                <span className="text-primary" aria-hidden>
-                  ·
+          <div className="mt-auto pt-3 space-y-2">
+            <div className="flex flex-wrap gap-2 text-xs">
+              {content.location ? (
+                <span className={`inline-flex items-center gap-1 font-medium ${cardTone.muted}`}>
+                  <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <span className="break-words">{content.location}</span>
                 </span>
-                {content.phone}
-              </span>
-            ) : null}
-          </div>
-          <div className={`mt-auto pt-4 text-sm font-semibold ${cardTone.cta}`}>
-            {variant === 'classified' ? 'Open notice' : 'Open dossier'}
+              ) : null}
+              {content.email ? (
+                <span className={`inline-flex items-center gap-1 ${cardTone.muted}`}>
+                  <Mail className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <span className="break-words">{content.email}</span>
+                </span>
+              ) : null}
+              {content.phone ? (
+                <span className={`inline-flex items-center gap-1 ${cardTone.muted}`}>
+                  <span className="text-primary" aria-hidden>
+                    ·
+                  </span>
+                  {content.phone}
+                </span>
+              ) : null}
+            </div>
+            <div className={`text-sm font-semibold ${cardTone.cta}`}>
+              {variant === 'classified' ? 'Open notice' : 'Open dossier'}
+            </div>
           </div>
         </div>
       </Link>
