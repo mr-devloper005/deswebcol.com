@@ -1,56 +1,59 @@
-import { Mail, MessageSquareText, ShieldCheck } from 'lucide-react';
+import { Building2, MapPin, MessageSquare, ShieldCheck } from 'lucide-react'
+import { NavbarShell } from '@/components/shared/navbar-shell'
+import { Footer } from '@/components/shared/footer'
+import { SITE_CONFIG } from '@/lib/site-config'
+import { CONTACT_PAGE_OVERRIDE_ENABLED, ContactPageOverride } from '@/overrides/contact-page'
+import { ContactLeadForm } from "@/components/shared/contact-lead-form";
 
-import { ContactLeadForm } from '@/components/shared/contact-lead-form';
-import { Footer } from '@/components/shared/footer';
-import { NavbarShell } from '@/components/shared/navbar-shell';
-
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Deswebcol';
-
-const contactHighlights = [
-  { icon: Mail, title: 'Direct response', copy: 'Your message is saved securely and routed to the right team.' },
-  { icon: MessageSquareText, title: 'Clear details', copy: 'Share your requirement, question, or collaboration idea in one place.' },
-  { icon: ShieldCheck, title: 'Reliable follow-up', copy: 'We keep the request record so every conversation stays traceable.' },
-];
+const lanes = [
+  { icon: Building2, title: 'Listing support', body: 'Request updates to business details, categories, ownership notes, or display information.' },
+  { icon: ShieldCheck, title: 'Verification help', body: 'Ask about claim status, evidence, duplicate records, or corrections to trusted listing data.' },
+  { icon: MapPin, title: 'Coverage requests', body: 'Tell us about missing local areas, service categories, or business clusters we should index next.' },
+]
 
 export default function ContactPage() {
+  if (CONTACT_PAGE_OVERRIDE_ENABLED) {
+    return <ContactPageOverride />
+  }
+
   return (
-    <div className="min-h-screen bg-[#f7f1e8] text-stone-950">
+    <div className="min-h-screen bg-[#1a1a1d] text-[#f4eef1]">
       <NavbarShell />
-      <main>
-        <section className="relative overflow-hidden px-6 py-20 md:px-10 lg:px-16">
-          <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
-          <div className="absolute bottom-0 right-[-8%] h-80 w-80 rounded-full bg-stone-300/50 blur-3xl" />
-
-          <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.35em] text-stone-500">Contact</p>
-              <h1 className="mt-5 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-stone-950 md:text-7xl">
-                Let&apos;s talk about your next move.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-                Use this form to reach {siteName}. Your request will be recorded and shared with the support team for follow-up.
-              </p>
-
-              <div className="mt-8 grid gap-4">
-                {contactHighlights.map((item) => (
-                  <div key={item.title} className="flex gap-4 rounded-3xl border border-stone-200 bg-white/60 p-5 shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-stone-950 text-white">
-                      <item.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h2 className="text-base font-black text-stone-950">{item.title}</h2>
-                      <p className="mt-1 text-sm leading-6 text-stone-600">{item.copy}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <ContactLeadForm />
+      <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <section className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#c77ba3]">Contact {SITE_CONFIG.name}</p>
+            <h1 className="mt-5 text-4xl font-normal uppercase leading-tight tracking-wide sm:text-5xl">
+              Reach the right desk for business listing work.
+            </h1>
+            <p className="mt-6 max-w-xl text-sm leading-8 text-[#c9b0bc]">
+              Send listing corrections, claim requests, coverage ideas, or partnership questions. We route messages by operational need instead of treating every request like a generic support ticket.
+            </p>
           </div>
+
+          <div className="grid gap-5">
+            {lanes.map((lane) => (
+              <article key={lane.title} className="border border-white/10 bg-[#231f24] p-6">
+                <lane.icon className="h-6 w-6 text-[#c77ba3]" />
+                <h2 className="mt-4 text-xl font-semibold text-white">{lane.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-[#c9b0bc]">{lane.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-12 grid gap-8 border-t border-white/10 pt-10 lg:grid-cols-[1fr_1fr]">
+          <div className="border border-white/10 bg-white/5 p-6">
+            <MessageSquare className="h-6 w-6 text-[#c77ba3]" />
+            <h2 className="mt-4 text-2xl font-semibold text-white">Send a message</h2>
+            <p className="mt-2 text-sm leading-7 text-[#c9b0bc]">
+              Include the listing name, URL, category, and the exact detail that needs attention.
+            </p>
+          </div>
+          <ContactLeadForm />
         </section>
       </main>
       <Footer />
     </div>
-  );
+  )
 }
